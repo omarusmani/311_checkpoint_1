@@ -2,7 +2,7 @@ const express = require('express')
 const app = express()
 const bodyParser = require("body-parser");
 const usersRouter = require('./routes/users');
-const users =require("./data/index");
+const users = require("./data/index");
 
 const port = process.env.PORT || 4000
 
@@ -10,6 +10,12 @@ app.use(bodyParser.json())
 // app.use('/users', usersRouter)
 app.get("/users", (req,res)=>{
   res.json(users);
+})
+app.get("/users/:id",(req,res)=>{
+  const id =req.params.id;
+  const person =users.find((user)=> user.id ===Number(id));
+  // console.log(person)
+  res.json(person);
 })
 app.get('/', (req, res) => res.send('default route'))
 app.listen(port, () => {
